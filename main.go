@@ -1,8 +1,8 @@
 package main
 
 import (
+	"exc-gorm/model"
 	"fmt"
-	"gorm/model"
 	"log"
 	"os"
 	"strconv"
@@ -51,12 +51,12 @@ func main() {
 	}
 
 	// create query
-	query := toInsertFriendQuery(userArr)
+	query := toInsertUserQuery(userArr)
 
 	// exec bulk insert
 	err = tx.Exec(query).Error
 	if err != nil {
-		fmt.Printf("failed to Bulk Insert : %v", err)
+		log.Fatal("failed to Bulk Insert : %v", err)
 		tx.Rollback()
 		return
 	}
@@ -64,17 +64,17 @@ func main() {
 	tx.Commit()
 }
 
-func toInsertFriendQuery(s []model.User) string {
+func toInsertUserQuery(s []model.User) string {
 	var query string = "INSERT INTO `user` (`id`, `name`, `picture_url`, `status_message`, `datetime`) VALUES "
 	var values = make([]string, len(s))
 	for i, data := range s {
-		values[i] = toInsertFriendValue(data)
+		values[i] = toInsertUserValue(data)
 	}
 
 	return query + strings.Join(values, ",") + ";"
 }
 
-func toInsertFriendValue(s model.User) string {
+func toInsertUserValue(s model.User) string {
 	return "(" + strings.Join([]string{
 		"'" + strconv.FormatInt(s.ID, 10) + "'",
 		"'" + s.Name + "'",
