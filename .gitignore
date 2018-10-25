@@ -1,3 +1,3 @@
 local.env
 Gopkg.lock
-vendor
+vendor/
