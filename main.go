@@ -14,6 +14,10 @@ import (
 	"github.com/joho/godotenv"
 )
 
+const (
+	digit = 3
+)
+
 func main() {
 
 	err := godotenv.Load("./local.env")
@@ -49,6 +53,10 @@ func main() {
 			m.Name = nameBase + "0" + nStr
 		default:
 			m.Name = nameBase + nStr
+		}
+		if len(m.Name) != digit {
+			log.Fatal("Name is invlaid digit")
+			continue
 		}
 
 		m.ID = 0
