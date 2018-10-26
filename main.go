@@ -39,10 +39,19 @@ func main() {
 	userArr := []model.User{}
 
 	// create array
-	for i := 0; i < 100; i++ {
+	for i := 0; i <= 100; i++ {
 		nStr := strconv.Itoa(i)
+
+		switch len(nStr) {
+		case 1:
+			m.Name = nameBase + "00" + nStr
+		case 2:
+			m.Name = nameBase + "0" + nStr
+		default:
+			m.Name = nameBase + nStr
+		}
+
 		m.ID = 0
-		m.Name = nameBase + nStr
 		m.StatusMessage = messageBase + nStr
 		m.PictureUrl = pictureBase + nStr
 		m.Datetime = time.Now().Local()
